@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<script src="https://lib.youware.com/youware-lib.1747145198.js" id="yourware-lib"></script></head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="h-8 w-8 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center mr-3">
+                        <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <h1 class="text-xl font-semibold text-gray-900">Painel Administrativo</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span id="admin-email" class="text-sm text-gray-500"></span>
+                    <button onclick="logout()" class="text-sm text-gray-500 hover:text-gray-700 px-3 py-1 rounded-md hover:bg-gray-100 transition-colors">
+                        Sair
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <!-- Navegação -->
+        <div class="mb-6">
+            <nav class="flex space-x-8 border-b border-gray-200">
+                <button onclick="showSection('publishers')" 
+                    class="nav-btn py-3 px-1 border-b-2 font-medium text-sm border-blue-500 text-blue-600" data-section="publishers">
+                    <div class="flex items-center">
+                        <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                        </svg>
+                        Publicadores
+                    </div>
+                </button>
+                <button onclick="showSection('reports')" 
+                    class="nav-btn py-3 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" data-section="reports">
+                    <div class="flex items-center">
+                        <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        Relatórios
+                    </div>
+                </button>
+                <button onclick="showSection('form-fields')" 
+                    class="nav-btn py-3 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" data-section="form-fields">
+                    <div class="flex items-center">
+                        <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        Configurar Formulário
+                    </div>
+                </button>
+                <button onclick="showSection('developer')" 
+                    class="nav-btn py-3 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" data-section="developer">
+                    <div class="flex items-center">
+                        <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                        </svg>
+                        Código Desenvolvedor
+                    </div>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Seção Publicadores -->
+        <div id="publishers-section" class="section">
+            <div class="bg-white shadow-sm rounded-lg border border-gray-200">
+                <div class="px-6 py-5 border-b border-gray-200">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">Gerenciar Publicadores</h3>
+                    <p class="mt-1 text-sm text-gray-500">Adicione, edite ou remova publicadores do sistema</p>
+                </div>
+                <div class="px-6 py-5">
+                    <!-- Formulário para adicionar publicador -->
+                    <div class="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        <h4 class="text-md font-medium text-gray-900 mb-3">Adicionar Novo Publicador</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <input type="text" id="new-publisher-name" placeholder="Nome do publicador" 
+                                class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <input type="text" id="new-publisher-family" placeholder="Família (opcional)" 
+                                class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <button onclick="addPublisher()" 
+                                class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Lista de publicadores -->
+                    <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-300">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Família</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Senha Temporária</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="publishers-table" class="bg-white divide-y divide-gray-200">
+                                <!-- Dados serão inseridos aqui dinamicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção Relatórios -->
+        <div id="reports-section" class="section hidden">
+            <div class="bg-white shadow-sm rounded-lg border border-gray-200">
+                <div class="px-6 py-5 border-b border-gray-200">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">Relatórios por Mês</h3>
+                    <p class="mt-1 text-sm text-gray-500">Visualize e analise os relatórios enviados</p>
+                </div>
+                <div class="px-6 py-5">
+                    <!-- Filtro por mês -->
+                    <div class="mb-6">
+                        <label for="month-filter" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por mês:</label>
+                        <select id="month-filter" onchange="filterReports()" 
+                            class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">Todos os meses</option>
+                        </select>
+                    </div>
+
+                    <!-- Lista de relatórios -->
+                    <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-300">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mês</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reports-table" class="bg-white divide-y divide-gray-200">
+                                <!-- Dados serão inseridos aqui dinamicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção Configurar Formulário -->
+        <div id="form-fields-section" class="section hidden">
+            <div class="bg-white shadow-sm rounded-lg border border-gray-200">
+                <div class="px-6 py-5 border-b border-gray-200">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">Configurar Campos do Formulário</h3>
+                    <p class="mt-1 text-sm text-gray-500">Personalize os campos do formulário de relatórios</p>
+                </div>
+                <div class="px-6 py-5">
+                    <!-- Adicionar novo campo -->
+                    <div class="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        <h4 class="text-md font-medium text-gray-900 mb-3">Adicionar Novo Campo</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <input type="text" id="field-label" placeholder="Nome do campo" 
+                                class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <select id="field-type" 
+                                class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <option value="text">Texto</option>
+                                <option value="number">Número</option>
+                                <option value="select">Seleção</option>
+                                <option value="textarea">Texto Longo</option>
+                            </select>
+                            <button onclick="addFormField()" 
+                                class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
+                                Adicionar Campo
+                            </button>
+                        </div>
+                        <div id="field-options" class="mt-3 hidden">
+                            <input type="text" id="field-options-input" placeholder="Opções separadas por vírgula (ex: Sim,Não)" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                    </div>
+
+                    <!-- Lista de campos -->
+                    <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-300">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Campo</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="form-fields-table" class="bg-white divide-y divide-gray-200">
+                                <!-- Dados serão inseridos aqui dinamicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção Código Desenvolvedor -->
+        <div id="developer-section" class="section hidden">
+            <div class="bg-white shadow-sm rounded-lg border border-gray-200">
+                <div class="px-6 py-5 border-b border-gray-200">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">Código Desenvolvedor</h3>
+                    <p class="mt-1 text-sm text-gray-500">Acesso completo ao código fonte do sistema</p>
+                </div>
+                <div class="px-6 py-5">
+                    <div class="mb-6">
+                        <button onclick="downloadAllCode()" 
+                            class="inline-flex items-center px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                            <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Baixar Código Completo
+                        </button>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="border border-gray-200 rounded-lg">
+                            <div class="bg-gray-50 px-4 py-3 border-b border-gray-200">
+                                <h4 class="text-sm font-medium text-gray-900">Arquivos do Sistema</h4>
+                            </div>
+                            <div class="p-4 space-y-3" id="files-list">
+                                <!-- Lista de arquivos será carregada aqui -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para visualizar código -->
+    <div id="code-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-5 border w-11/12 max-w-4xl shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 id="modal-title" class="text-lg font-medium text-gray-900"></h3>
+                    <button onclick="closeCodeModal()" class="text-gray-400 hover:text-gray-600">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="bg-gray-900 rounded-lg p-4 overflow-auto max-h-96">
+                    <pre id="modal-code" class="text-green-400 text-sm"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getDatabase, ref, push, set, get, remove, update } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCryCvlYnVnP3Q8g_hZIQPWWK0Cu9jWp1A",
+            authDomain: "relatoriojw-36996.firebaseapp.com",
+            projectId: "relatoriojw-36996",
+            storageBucket: "relatoriojw-36996.firebasestorage.app",
+            messagingSenderId: "944016302555",
+            appId: "1:944016302555:web:d4a15651b7570cecd947fe",
+            measurementId: "G-3KG25D1VSR",
+            databaseURL: "https://relatoriojw-36996-default-rtdb.firebaseio.com"
+        };
+
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+
+        // Disponibilizar globalmente
+        window.firebaseAuth = auth;
+        window.firebaseDatabase = database;
+        window.firebaseRef = ref;
+        window.firebasePush = push;
+        window.firebaseSet = set;
+        window.firebaseGet = get;
+        window.firebaseRemove = remove;
+        window.firebaseUpdate = update;
+
+        // Verificar autenticação
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.href = 'admin-login.html';
+            } else {
+                document.getElementById('admin-email').textContent = user.email;
+            }
+        });
+    </script>
+
+    <script>
+        // Verificar se há usuário logado
+        const adminUser = JSON.parse(localStorage.getItem('adminUser') || 'null');
+        if (!adminUser) {
+            window.location.href = 'admin-login.html';
+        }
+
+        function showSection(sectionName) {
+            // Esconder todas as seções
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Mostrar seção selecionada
+            document.getElementById(sectionName + '-section').classList.remove('hidden');
+            
+            // Atualizar navegação
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('border-blue-500', 'text-blue-600');
+                btn.classList.add('border-transparent', 'text-gray-500');
+            });
+            
+            document.querySelector(`[data-section="${sectionName}"]`).classList.remove('border-transparent', 'text-gray-500');
+            document.querySelector(`[data-section="${sectionName}"]`).classList.add('border-blue-500', 'text-blue-600');
+            
+            // Carregar dados da seção
+            if (sectionName === 'publishers') {
+                loadPublishers();
+            } else if (sectionName === 'reports') {
+                loadReports();
+            } else if (sectionName === 'form-fields') {
+                loadFormFields();
+            } else if (sectionName === 'developer') {
+                loadDeveloperFiles();
+            }
+        }
+
+        async function loadPublishers() {
+            try {
+                const publishersRef = window.firebaseRef(window.firebaseDatabase, 'publishers');
+                const snapshot = await window.firebaseGet(publishersRef);
+                
+                const tbody = document.getElementById('publishers-table');
+                tbody.innerHTML = '';
+                
+                if (snapshot.exists()) {
+                    const publishers = snapshot.val();
+                    
+                    Object.entries(publishers).forEach(([key, publisher]) => {
+                        const row = `
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${publisher.name}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${publisher.family || '-'}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono">${publisher.tempPassword}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                                    <button onclick="editPublisher('${key}')" class="text-blue-600 hover:text-blue-900">Editar</button>
+                                    <button onclick="generateNewPassword('${key}')" class="text-green-600 hover:text-green-900">Nova Senha</button>
+                                    <button onclick="deletePublisher('${key}')" class="text-red-600 hover:text-red-900">Excluir</button>
+                                </td>
+                            </tr>
+                        `;
+                        tbody.innerHTML += row;
+                    });
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="4" class="px-6 py-4 text-center text-gray-500">Nenhum publicador cadastrado</td></tr>';
+                }
+            } catch (error) {
+                console.error('Erro ao carregar publicadores:', error);
+            }
+        }
+
+        async function addPublisher() {
+            const name = document.getElementById('new-publisher-name').value.trim();
+            const family = document.getElementById('new-publisher-family').value.trim();
+            
+            if (!name) {
+                alert('Nome é obrigatório');
+                return;
+            }
+            
+            try {
+                const publishersRef = window.firebaseRef(window.firebaseDatabase, 'publishers');
+                await window.firebasePush(publishersRef, {
+                    name: name,
+                    family: family,
+                    tempPassword: generateTempPassword(),
+                    createdAt: new Date().toISOString()
+                });
+                
+                // Limpar formulário
+                document.getElementById('new-publisher-name').value = '';
+                document.getElementById('new-publisher-family').value = '';
+                
+                loadPublishers();
+            } catch (error) {
+                console.error('Erro ao adicionar publicador:', error);
+                alert('Erro ao adicionar publicador');
+            }
+        }
+
+        function generateTempPassword() {
+            return Math.random().toString(36).substr(2, 8);
+        }
+
+        async function generateNewPassword(publisherId) {
+            try {
+                const newPassword = generateTempPassword();
+                const publisherRef = window.firebaseRef(window.firebaseDatabase, `publishers/${publisherId}`);
+                await window.firebaseUpdate(publisherRef, { tempPassword: newPassword });
+                
+                loadPublishers();
+                alert(`Nova senha gerada: ${newPassword}`);
+            } catch (error) {
+                console.error('Erro ao gerar nova senha:', error);
+            }
+        }
+
+        async function deletePublisher(publisherId) {
+            if (confirm('Tem certeza que deseja excluir este publicador?')) {
+                try {
+                    const publisherRef = window.firebaseRef(window.firebaseDatabase, `publishers/${publisherId}`);
+                    await window.firebaseRemove(publisherRef);
+                    loadPublishers();
+                } catch (error) {
+                    console.error('Erro ao excluir publicador:', error);
+                }
+            }
+        }
+
+        async function editPublisher(publisherId) {
+            try {
+                const publisherRef = window.firebaseRef(window.firebaseDatabase, `publishers/${publisherId}`);
+                const snapshot = await window.firebaseGet(publisherRef);
+                
+                if (snapshot.exists()) {
+                    const publisher = snapshot.val();
+                    const newName = prompt('Novo nome:', publisher.name);
+                    const newFamily = prompt('Nova família:', publisher.family || '');
+                    
+                    if (newName) {
+                        await window.firebaseUpdate(publisherRef, {
+                            name: newName,
+                            family: newFamily
+                        });
+                        loadPublishers();
+                    }
+                }
+            } catch (error) {
+                console.error('Erro ao editar publicador:', error);
+            }
+        }
+
+        async function loadReports() {
+            try {
+                const reportsRef = window.firebaseRef(window.firebaseDatabase, 'reports');
+                const snapshot = await window.firebaseGet(reportsRef);
+                
+                // Carregar opções de mês
+                const monthFilter = document.getElementById('month-filter');
+                monthFilter.innerHTML = '<option value="">Todos os meses</option>';
+                
+                if (snapshot.exists()) {
+                    const reports = snapshot.val();
+                    const months = [...new Set(Object.values(reports).map(r => r.month))];
+                    
+                    months.forEach(month => {
+                        const option = document.createElement('option');
+                        option.value = month;
+                        option.textContent = new Date(month + '-01').toLocaleDateString('pt-BR', { year: 'numeric', month: 'long' });
+                        monthFilter.appendChild(option);
+                    });
+                }
+                
+                filterReports();
+            } catch (error) {
+                console.error('Erro ao carregar relatórios:', error);
+            }
+        }
+
+        async function filterReports() {
+            try {
+                const selectedMonth = document.getElementById('month-filter').value;
+                const reportsRef = window.firebaseRef(window.firebaseDatabase, 'reports');
+                const snapshot = await window.firebaseGet(reportsRef);
+                
+                const tbody = document.getElementById('reports-table');
+                tbody.innerHTML = '';
+                
+                if (snapshot.exists()) {
+                    const reports = snapshot.val();
+                    const filteredReports = Object.entries(reports).filter(([key, report]) => 
+                        !selectedMonth || report.month === selectedMonth
+                    );
+                    
+                    filteredReports.forEach(([key, report]) => {
+                        const statusBadge = report.submitted ? 
+                            'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+                        const statusText = report.submitted ? 'Enviado' : 'Pendente';
+                        
+                        const row = `
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${report.publisherName}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${new Date(report.month + '-01').toLocaleDateString('pt-BR', { year: 'numeric', month: 'long' })}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusBadge}">
+                                        ${statusText}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    ${report.submitted ? `<button onclick="viewReport('${key}')" class="text-blue-600 hover:text-blue-900">Ver Detalhes</button>` : '-'}
+                                </td>
+                            </tr>
+                        `;
+                        tbody.innerHTML += row;
+                    });
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="4" class="px-6 py-4 text-center text-gray-500">Nenhum relatório encontrado</td></tr>';
+                }
+            } catch (error) {
+                console.error('Erro ao filtrar relatórios:', error);
+            }
+        }
+
+        async function viewReport(reportId) {
+            try {
+                const reportRef = window.firebaseRef(window.firebaseDatabase, `reports/${reportId}`);
+                const snapshot = await window.firebaseGet(reportRef);
+                
+                if (snapshot.exists()) {
+                    const report = snapshot.val();
+                    let details = `Relatório de ${report.publisherName} - ${new Date(report.month + '-01').toLocaleDateString('pt-BR', { year: 'numeric', month: 'long' })}\n\n`;
+                    
+                    if (report.data) {
+                        Object.entries(report.data).forEach(([key, value]) => {
+                            details += `${key}: ${value}\n`;
+                        });
+                    }
+                    
+                    alert(details);
+                }
+            } catch (error) {
+                console.error('Erro ao visualizar relatório:', error);
+            }
+        }
+
+        async function loadFormFields() {
+            try {
+                const fieldsRef = window.firebaseRef(window.firebaseDatabase, 'formFields');
+                const snapshot = await window.firebaseGet(fieldsRef);
+                
+                const tbody = document.getElementById('form-fields-table');
+                tbody.innerHTML = '';
+                
+                if (snapshot.exists()) {
+                    const fields = snapshot.val();
+                    
+                    Object.entries(fields).forEach(([key, field]) => {
+                        const row = `
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${field.label}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${field.type}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button onclick="deleteFormField('${key}')" class="text-red-600 hover:text-red-900">Excluir</button>
+                                </td>
+                            </tr>
+                        `;
+                        tbody.innerHTML += row;
+                    });
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="3" class="px-6 py-4 text-center text-gray-500">Nenhum campo personalizado</td></tr>';
+                }
+            } catch (error) {
+                console.error('Erro ao carregar campos:', error);
+            }
+        }
+
+        async function addFormField() {
+            const label = document.getElementById('field-label').value.trim();
+            const type = document.getElementById('field-type').value;
+            const optionsInput = document.getElementById('field-options-input').value.trim();
+            
+            if (!label) {
+                alert('Nome do campo é obrigatório');
+                return;
+            }
+            
+            try {
+                const options = type === 'select' && optionsInput ? optionsInput.split(',').map(opt => opt.trim()) : null;
+                
+                const fieldsRef = window.firebaseRef(window.firebaseDatabase, 'formFields');
+                await window.firebasePush(fieldsRef, {
+                    label: label,
+                    type: type,
+                    options: options,
+                    required: false,
+                    createdAt: new Date().toISOString()
+                });
+                
+                // Limpar formulário
+                document.getElementById('field-label').value = '';
+                document.getElementById('field-type').value = 'text';
+                document.getElementById('field-options-input').value = '';
+                document.getElementById('field-options').classList.add('hidden');
+                
+                loadFormFields();
+            } catch (error) {
+                console.error('Erro ao adicionar campo:', error);
+                alert('Erro ao adicionar campo');
+            }
+        }
+
+        async function deleteFormField(fieldId) {
+            if (confirm('Tem certeza que deseja excluir este campo?')) {
+                try {
+                    const fieldRef = window.firebaseRef(window.firebaseDatabase, `formFields/${fieldId}`);
+                    await window.firebaseRemove(fieldRef);
+                    loadFormFields();
+                } catch (error) {
+                    console.error('Erro ao excluir campo:', error);
+                }
+            }
+        }
+
+        // Mostrar/esconder opções para campos de seleção
+        document.getElementById('field-type').addEventListener('change', function() {
+            const optionsDiv = document.getElementById('field-options');
+            if (this.value === 'select') {
+                optionsDiv.classList.remove('hidden');
+            } else {
+                optionsDiv.classList.add('hidden');
+            }
+        });
+
+        async function logout() {
+            try {
+                if (window.firebaseAuth) {
+                    await window.firebaseAuth.signOut();
+                }
+                localStorage.removeItem('adminUser');
+                window.location.href = 'index.html';
+            } catch (error) {
+                console.error('Erro no logout:', error);
+                localStorage.removeItem('adminUser');
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Funções da seção Desenvolvedor
+        function loadDeveloperFiles() {
+            const filesList = document.getElementById('files-list');
+            const files = [
+                { name: 'index.html', type: 'html' },
+                { name: 'admin-login.html', type: 'html' },
+                { name: 'publisher-login.html', type: 'html' },
+                { name: 'admin.html', type: 'html' },
+                { name: 'form.html', type: 'html' },
+                { name: 'YOUWARE.md', type: 'markdown' }
+            ];
+            
+            filesList.innerHTML = '';
+            
+            files.forEach(file => {
+                const fileDiv = document.createElement('div');
+                fileDiv.className = 'flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50';
+                fileDiv.innerHTML = `
+                    <div class="flex items-center">
+                        <svg class="h-5 w-5 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        <span class="text-sm font-medium text-gray-900">${file.name}</span>
+                        <span class="ml-2 text-xs text-gray-500">${file.type.toUpperCase()}</span>
+                    </div>
+                    <button onclick="viewFileCode('${file.name}')" class="text-blue-600 hover:text-blue-800 text-sm">
+                        Ver Código
+                    </button>
+                `;
+                filesList.appendChild(fileDiv);
+            });
+        }
+
+        async function viewFileCode(fileName) {
+            try {
+                const response = await fetch(fileName);
+                const code = await response.text();
+                
+                document.getElementById('modal-title').textContent = fileName;
+                document.getElementById('modal-code').textContent = code;
+                document.getElementById('code-modal').classList.remove('hidden');
+            } catch (error) {
+                console.error('Erro ao carregar arquivo:', error);
+                alert('Erro ao carregar o arquivo');
+            }
+        }
+
+        function closeCodeModal() {
+            document.getElementById('code-modal').classList.add('hidden');
+        }
+
+        function downloadAllCode() {
+            // Criar um arquivo ZIP com todos os códigos (simulação)
+            const files = [
+                'index.html',
+                'admin-login.html', 
+                'publisher-login.html',
+                'admin.html',
+                'form.html',
+                'YOUWARE.md'
+            ];
+            
+            // Simular download
+            const link = document.createElement('a');
+            link.href = 'data:text/plain;charset=utf-8,Sistema de Relatórios - Código Fonte\n\nArquivos inclusos:\n' + files.join('\n');
+            link.download = 'relatorio-sistema-codigo.txt';
+            link.click();
+            
+            alert('Download iniciado! Nota: Este é um download simulado. Em produção, seria gerado um arquivo ZIP com todos os códigos.');
+        }
+
+        // Carregar publicadores por padrão
+        loadPublishers();
+    </script>
+</body>
+</html>
